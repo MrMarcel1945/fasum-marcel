@@ -12,7 +12,12 @@
           "package_name": "com.example.fasum_marcel"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "683722216857-fgti992o721acb8i1etce6dkpt84troj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAvEhQ0-g-6s5f_0L-9Qbomeg-GbVPBLmw"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683722216857-fgti992o721acb8i1etce6dkpt84troj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "683722216857-o286591fusisfq5679r2vd156cpusaut.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fasumMarcel"
+              }
+            }
+          ]
         }
       }
     }

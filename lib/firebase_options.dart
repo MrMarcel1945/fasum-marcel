@@ -64,6 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '683722216857',
     projectId: 'fasum-marcel-ce5ef',
     storageBucket: 'fasum-marcel-ce5ef.appspot.com',
+    iosClientId: '683722216857-o286591fusisfq5679r2vd156cpusaut.apps.googleusercontent.com',
     iosBundleId: 'com.example.fasumMarcel',
   );
 
@@ -73,6 +74,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '683722216857',
     projectId: 'fasum-marcel-ce5ef',
     storageBucket: 'fasum-marcel-ce5ef.appspot.com',
+    iosClientId: '683722216857-o286591fusisfq5679r2vd156cpusaut.apps.googleusercontent.com',
     iosBundleId: 'com.example.fasumMarcel',
   );
 
@@ -85,4 +87,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'fasum-marcel-ce5ef.appspot.com',
     measurementId: 'G-QVPSNXFXNH',
   );
+
 }
