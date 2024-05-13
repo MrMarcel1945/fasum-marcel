@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fasum_marcel/firebase_options.dart';
 import 'package:fasum_marcel/screens/home_screen.dart';
 import 'package:fasum_marcel/screens/sign_in_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
