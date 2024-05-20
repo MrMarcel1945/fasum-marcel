@@ -106,8 +106,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       'text': _postTextController.text,
                       'image_url': _imageUrl,
                       'timestamp': Timestamp.now(),
-                      'username': user?.displayName ?? 'Anonim', // Menambahkan nama pengguna
-                      'userId': user?.uid, // Menyimpan ID pengguna untuk referensi
+                      'username': user?.email ?? 'Anonim', // Gunakan email atau pengenal lainnya
+                      'userId': user?.uid, // Simpan ID pengguna untuk referensi
                     }).then((_) {
                       Navigator.pop(context);
                     }).catchError((error) {

@@ -67,6 +67,10 @@ class HomeScreen extends StatelessWidget {
                           width: double.infinity,
                           height: double.infinity,
                         ),
+                      )
+                    else
+                      Expanded(
+                        child: Center(child: Text('Gambar tidak tersedia')),
                       ),
                     Padding(
                       padding: const EdgeInsets.all(4.0),
