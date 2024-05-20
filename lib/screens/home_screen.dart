@@ -37,7 +37,11 @@ class HomeScreen extends StatelessWidget {
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
             return const Center(child: Text('Tidak ada postingan tersedia'));
           }
-          return ListView.builder(
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, // Jumlah kolom
+              childAspectRatio: 1, // Rasio aspek untuk membuat gambar kotak
+            ),
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var post = snapshot.data!.docs[index];
@@ -51,14 +55,21 @@ class HomeScreen extends StatelessWidget {
               var text = data.containsKey('text') ? data['text'] : '';
 
               return Card(
-                margin: EdgeInsets.all(10.0),
+                margin: EdgeInsets.all(4.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (imageUrl != null)
-                      Image.network(imageUrl),
+                      Expanded(
+                        child: Image.network(
+                          imageUrl,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,
+                        ),
+                      ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(4.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -66,19 +77,23 @@ class HomeScreen extends StatelessWidget {
                             username,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: 14,
                             ),
                           ),
-                          SizedBox(height: 4),
+                          SizedBox(height: 2),
                           Text(
                             formattedDate,
                             style: TextStyle(
                               color: Colors.grey,
-                              fontSize: 12,
+                              fontSize: 10,
                             ),
                           ),
-                          SizedBox(height: 8),
-                          Text(text),
+                          SizedBox(height: 4),
+                          Text(
+                            text,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ],
                       ),
                     ),
