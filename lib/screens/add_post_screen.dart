@@ -5,6 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:fasum_marcel/location_picker.dart';  // Sesuaikan dengan path file Anda
 
 class AddPostScreen extends StatefulWidget {
   @override
@@ -16,6 +19,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
   String? _imageUrl;
   XFile? _image;
   final User? user = FirebaseAuth.instance.currentUser;
+  String? _locationMessage;
+  LatLng? _selectedLocation;
 
   Future<void> _getImageFromCamera() async {
     final ImagePicker _picker = ImagePicker();
@@ -26,7 +31,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
         _image = image;
       });
 
-      // Upload image and get URL if not on web
       if (!kIsWeb) {
         String? imageUrl = await _uploadImage(image);
         setState(() {
@@ -49,6 +53,36 @@ class _AddPostScreenState extends State<AddPostScreen> {
       print('Error uploading image: $e');
       return null;
     }
+  }
+
+  Future<void> _pickLocation() async {
+    final pickedLocation = await Navigator.push<LatLng>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LocationPicker(),
+      ),
+    );
+
+    if (pickedLocation != null) {
+      setState(() {
+        _selectedLocation = pickedLocation;
+        _locationMessage = 'Latitude: ${pickedLocation.latitude}, Longitude: ${pickedLocation.longitude}';
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentLocation();
+  }
+
+  Future<void> _getCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      _selectedLocation = LatLng(position.latitude, position.longitude);
+      _locationMessage = 'Latitude: ${position.latitude}, Longitude: ${position.longitude}';
+    });
   }
 
   @override
@@ -95,6 +129,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
               ),
             ),
             SizedBox(height: 20),
+            Text(_locationMessage ?? 'Mengambil lokasi...'),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _pickLocation,
+              child: Text('Pilih Lokasi di Peta'),
+            ),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
                 if (_postTextController.text.isNotEmpty && _image != null) {
@@ -106,8 +147,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       'text': _postTextController.text,
                       'image_url': _imageUrl,
                       'timestamp': Timestamp.now(),
-                      'username': user?.email ?? 'Anonim', // Gunakan email atau pengenal lainnya
-                      'userId': user?.uid, // Simpan ID pengguna untuk referensi
+                      'username': user?.email ?? 'Anonim',
+                      'userId': user?.uid,
+                      'location': _selectedLocation != null ? GeoPoint(_selectedLocation!.latitude, _selectedLocation!.longitude) : null,
                     }).then((_) {
                       Navigator.pop(context);
                     }).catchError((error) {
